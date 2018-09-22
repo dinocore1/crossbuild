@@ -71,6 +71,4 @@ COPY assets/x86-win.cmake /home/jenkins/
 ADD https://bitbucket.org/alexkasko/openjdk-unofficial-builds/downloads/openjdk-1.7.0-u80-unofficial-windows-i586-image.zip /opt/
 RUN cd /opt && unzip openjdk-1.7.0-u80-unofficial-windows-i586-image.zip && rm openjdk-1.7.0-u80-unofficial-windows-i586-image.zip
 
-COPY cmake 
-
 USER jenkins
