@@ -40,8 +40,6 @@ ENV PATH ${PATH}:${ANDROID_NDK_HOME}
 
 ###########################################
 
-RUN useradd jenkins --shell /bin/bash --create-home
-
 ######## Inno Setup ######
 
 RUN add-apt-repository --yes ppa:arx/release && \
@@ -52,10 +50,9 @@ RUN add-apt-repository --yes ppa:arx/release && \
     cd /opt/innosetup && \
     wget -O is.exe http://www.jrsoftware.org/download.php/is.exe && \
     innoextract is.exe && \
-    mkdir -p /home/jenkins/.wine/drive_c/inno && \
-    cp -a app/* /home/jenkins/.wine/drive_c/inno && \
-    cd / && rm -rf /opt/innosetup && \
-    chown -R jenkins:jenkins /home/jenkins/.wine
+    mkdir -p /root/.wine/drive_c/inno && \
+    cp -a app/* /root/.wine/drive_c/inno && \
+    cd / && rm -rf /opt/innosetup
 
 RUN echo '#!/bin/sh\n\
 unset DISPLAY\n\
@@ -66,9 +63,7 @@ wine "C:\inno\ISCC.exe" "$scriptname" "/q"\n'\
 
 ########### MingW 64 Setup #################
 
-COPY assets/x86-win.cmake /home/jenkins/
+COPY assets/x86-win.cmake /root/
 
 ADD https://bitbucket.org/alexkasko/openjdk-unofficial-builds/downloads/openjdk-1.7.0-u80-unofficial-windows-i586-image.zip /opt/
 RUN cd /opt && unzip openjdk-1.7.0-u80-unofficial-windows-i586-image.zip && rm openjdk-1.7.0-u80-unofficial-windows-i586-image.zip
-
-USER jenkins
